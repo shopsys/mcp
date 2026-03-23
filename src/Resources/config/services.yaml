@@ -5,7 +5,7 @@ services:
         public: false
 
     Shopsys\McpBundle\:
-        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository,Subscriber}.php'
+        resource: '../../**/*{Authenticator,DataFactory,Facade,Factory,Generator,Hasher,Lookup,Repository,Subscriber,Tool}.php'
 
     Shopsys\McpBundle\Controller\:
         resource: '../../Controller/'

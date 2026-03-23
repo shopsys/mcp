@@ -45,6 +45,13 @@ TEXT;
     #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('shopsys_mcp.authorization.access_token_ttl_seconds', $config['authorization']['access_token_ttl_seconds']);
+        $container->setParameter('shopsys_mcp.query.max_returned_rows', $config['query']['max_returned_rows']);
+        $container->setParameter('shopsys_mcp.query.statement_timeout_ms', $config['query']['statement_timeout_ms']);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
     }
