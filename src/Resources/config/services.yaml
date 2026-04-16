@@ -49,3 +49,15 @@ services:
 
     Shopsys\McpBundle\Form\:
         resource: '../../Form/'
+
+    Shopsys\McpBundle\Model\Administrator\McpToken\AdministratorMcpTokenFacade:
+        arguments:
+            $accessTokenTtlSeconds: '%shopsys_mcp.authorization.access_token_ttl_seconds%'
+
+    Shopsys\McpBundle\Model\OAuth\McpOAuthAuthorizationCodeFacade:
+        arguments:
+            $cacheItemPool: '@cache.app'
+
+    Shopsys\McpBundle\Model\OAuth\McpOAuthClientRegistrationStorage:
+        arguments:
+            $cacheItemPool: '@cache.app'

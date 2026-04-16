@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\McpBundle\Model\Administrator\McpToken;
 
+use Psr\Clock\ClockInterface;
+
 class AdministratorMcpTokenLookup
 {
     public function __construct(
         protected readonly AdministratorMcpTokenRepository $administratorMcpTokenRepository,
         protected readonly AdministratorMcpTokenHasher $administratorMcpTokenHasher,
+        protected readonly ClockInterface $clock,
     ) {
     }
 
@@ -20,9 +23,13 @@ class AdministratorMcpTokenLookup
             return null;
         }
 
-        $administratorMcpToken = $this->administratorMcpTokenRepository->findActiveByPublicTokenId($tokenParts[0]);
+        $administratorMcpToken = $this->administratorMcpTokenRepository->findCurrentByPublicTokenId($tokenParts[0]);
 
         if ($administratorMcpToken === null) {
+            return null;
+        }
+
+        if (!$administratorMcpToken->isValidAt($this->clock->now())) {
             return null;
         }
 
